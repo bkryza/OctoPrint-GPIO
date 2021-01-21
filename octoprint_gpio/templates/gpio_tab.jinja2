@@ -1,0 +1,11 @@
+<h4>{{ _('GPIO') }}</h4>
+
+<form class="form-horizontal">
+  <div data-bind="foreach: $root.gpio_bindings">
+    <tr>
+        <td>
+            <span>GPIO&nbsp;<!--ko text: gpio--><!--/ko--></span>
+        </td>
+    </tr>
+</div>
+</form>

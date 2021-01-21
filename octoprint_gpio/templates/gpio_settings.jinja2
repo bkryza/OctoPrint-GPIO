@@ -1,0 +1,24 @@
+<h4>{{ _('GPIO Configuration') }}</h4>
+
+<form class="form-horizontal">
+  <table>
+    <tr>
+      <td>GPIO</td>
+      <td>Type</td>
+      <td>Label</td>
+    </tr>
+    <!-- ko foreach: settingsViewModel.settings.plugins.gpio.bindings -->
+    <tr>
+        <td>
+            <span><!--ko text: gpio--><!--/ko--></span>
+        </td>
+        <td>
+            <select data-bind="options: $root.gpioTypes(), selectedOptions: $data.type"></select>
+        </td>
+        <td>
+            <span><input data-bind="textInput: $data.label" /><span>
+        </td>
+    </tr>
+    <!-- /ko -->
+  </table>
+</form>
