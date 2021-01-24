@@ -10,8 +10,16 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 
 [**.py]
-indent_style = tab
+indent_style = space
 
 [**.js]
 indent_style = space
-indent_size = 4
+indent_size = 2
+
+[**.css]
+indent_style = space
+indent_size = 2
+
+[**.jinja2]
+indent_style = space
+indent_size = 2

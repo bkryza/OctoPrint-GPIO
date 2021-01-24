@@ -1,24 +1,48 @@
 <h4>{{ _('GPIO Configuration') }}</h4>
 
-<form class="form-horizontal">
-  <table>
-    <tr>
-      <td>GPIO</td>
-      <td>Type</td>
-      <td>Label</td>
-    </tr>
-    <!-- ko foreach: settingsViewModel.settings.plugins.gpio.bindings -->
-    <tr>
-        <td>
-            <span><!--ko text: gpio--><!--/ko--></span>
-        </td>
-        <td>
-            <select data-bind="options: $root.gpioTypes(), selectedOptions: $data.type"></select>
-        </td>
-        <td>
-            <span><input data-bind="textInput: $data.label" /><span>
-        </td>
-    </tr>
-    <!-- /ko -->
-  </table>
+<div><img src="https://www.raspberrypi.org/documentation/usage/gpio/images/GPIO-Pinout-Diagram-2.png"
+        alt="Raspberry Pi GPIO Pinout diagram" />
+    <small>Source: https://www.raspberrypi.org
+    </small>
+</div>
+
+<!--<tr>
+            <td>GPIO</td>
+            <td>Type</td>
+            <td>Label</td>
+            <td>Params</td>
+        </tr>-->
+<!--<pre data-bind="text: ko.toJSON(gpio_settings, null, 2)"></pre>-->
+<form class="form-vertical">
+    <table data-bind="foreach: gpio_settings">
+        <tr>
+            <td>
+                <div data-bind="text: gpio"></div>
+            </td>
+            <td>
+                <select class="gpio-type" data-bind="options: $root.gpioTypes(), selectedOptions: type"></select>
+            </td>
+            <td>
+                <div data-bind="ifnot: type() == 'UNDEFINED'">
+                    <span><input class="gpio-label" data-bind="textInput: $data.label" /></span>
+                </div>
+            </td>
+            <td>
+                <div data-bind="if: type() == 'OUTPUT'">
+                    <input type='checkbox' data-bind="checked: $data.initialValue">Initial
+                    value
+                    </input>
+                </div>
+                <div data-bind="if: type() == 'INPUT'">
+                    <input type='checkbox' data-bind="checked: $data.pullUp">Pull
+                    up
+                    </input>
+                    <input type='checkbox' data-bind="checked: $data.activeState">Active
+                    state
+                    </input>
+                    <span><input class='gpio-bounce' data-bind="textInput: $data.bounceTime" />Bounce time [ms]</span>
+                </div>
+            </td>
+        </tr>
+    </table>
 </form>

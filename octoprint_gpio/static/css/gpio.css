@@ -1,1 +1,12 @@
-/* TODO: Have your plugin's CSS files generated to here. */
+select.gpio-type {
+  width: 9em
+}
+
+input.gpio-label {
+  width: 10em
+}
+
+input.gpio-bounce {
+  width: 2em
+}
+

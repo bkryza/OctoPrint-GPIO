@@ -33,13 +33,13 @@ class GpioPlugin(
     def get_settings_defaults(self):
         return dict(
             bindings=[
-                {"gpio": 0, "type": "UNDEFINED", "label": ""},
-                {"gpio": 1, "type": "UNDEFINED", "label": ""},
-                {"gpio": 2, "type": "INPUT", "label": "Enclosure lock sensor",},
-                {"gpio": 3, "type": "OUTPUT", "label": "Enclosure light",},
-                {"gpio": 4, "type": "PWM", "label": "RGB backlight"},
-                {"gpio": 5, "type": "WAVEFORM", "label": ""},
-                {"gpio": 6, "type": "SERVO", "label": ""},
+                {"gpio": 0, "type": ["UNDEFINED"]},
+                {"gpio": 1, "type": ["UNDEFINED"]},
+                {"gpio": 2, "type": ["INPUT"], "label": "Enclosure lock sensor", "pullUp": True, "activeState": True, "bounceTime": 0},
+                {"gpio": 3, "type": ["OUTPUT"], "label": "Enclosure light", "initialValue": False},
+                {"gpio": 4, "type": ["PWM"], "label": "RGB backlight"},
+                {"gpio": 5, "type": ["WAVEFORM"], "label": ""},
+                {"gpio": 6, "type": ["SERVO"], "label": ""},
             ]
         )
 
