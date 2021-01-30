@@ -8,16 +8,23 @@ $(function() {
   function GpioViewModel(parameters) {
     var self = this;
 
-    self.gpioTypes = ko.observableArray(['UNDEFINED', 'OUTPUT', 'INPUT', 'PWM', 'SERVO', 'WAVEFORM']);
     self.pluginName = "gpio";
 
-    self.gpio_settings = ko.observableArray();
+    self.gpioTypes = ko.observableArray();
+    self.gpioSettings = ko.observableArray();
+    self.gpioFactories = ko.observableArray();
+    self.inputControls = ko.observableArray(["Button"]);
+    self.outputControls = ko.observableArray(["Indicator"]);
+    self.pwmControls = ko.observableArray(["Input", "Slider"]);
+    self.servoControls = ko.observableArray(["Input", "Slider"]);
 
     self.loginStateViewModel = parameters[0];
     self.settingsViewModel = parameters[1];
 
     self.bindFromSettings = function() {
-      self.gpio_settings(self.settingsViewModel.settings.plugins.gpio.bindings());
+      self.gpioTypes(self.settingsViewModel.settings.plugins.gpio.gpioTypes());
+      self.gpioFactories(self.settingsViewModel.settings.plugins.gpio.gpioFactories())
+      self.gpioSettings(self.settingsViewModel.settings.plugins.gpio.bindings());
     };
 
     self.onBeforeBinding = function() {

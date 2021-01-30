@@ -2,11 +2,35 @@ select.gpio-type {
   width: 9em
 }
 
+select.gpio-pin-factory {
+  width: 6em
+}
+
+
 input.gpio-label {
   width: 10em
 }
 
 input.gpio-bounce {
-  width: 2em
+  width: 3em
 }
 
+input.pwm-frequency {
+  width: 4em
+}
+
+div.settings-gpio-params div {
+  display: block;
+  color: #000;
+  padding: 4px 0;
+  text-align: left;
+  margin-bottom: 1px;
+}
+
+.settings-gpio-rows tr:nth-child(even) {
+  background-color: #ffffff
+}
+
+.settings-gpio-rows tr:nth-child(odd) {
+  background-color: #efefef
+}

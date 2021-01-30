@@ -6,43 +6,130 @@
     </small>
 </div>
 
-<!--<tr>
-            <td>GPIO</td>
-            <td>Type</td>
-            <td>Label</td>
-            <td>Params</td>
-        </tr>-->
 <!--<pre data-bind="text: ko.toJSON(gpio_settings, null, 2)"></pre>-->
 <form class="form-vertical">
-    <table data-bind="foreach: gpio_settings">
-        <tr>
-            <td>
-                <div data-bind="text: gpio"></div>
-            </td>
-            <td>
-                <select class="gpio-type" data-bind="options: $root.gpioTypes(), selectedOptions: type"></select>
-            </td>
-            <td>
-                <div data-bind="ifnot: type() == 'UNDEFINED'">
-                    <span><input class="gpio-label" data-bind="textInput: $data.label" /></span>
-                </div>
-            </td>
-            <td>
-                <div data-bind="if: type() == 'OUTPUT'">
-                    <input type='checkbox' data-bind="checked: $data.initialValue">Initial
-                    value
-                    </input>
-                </div>
-                <div data-bind="if: type() == 'INPUT'">
-                    <input type='checkbox' data-bind="checked: $data.pullUp">Pull
-                    up
-                    </input>
-                    <input type='checkbox' data-bind="checked: $data.activeState">Active
-                    state
-                    </input>
-                    <span><input class='gpio-bounce' data-bind="textInput: $data.bounceTime" />Bounce time [ms]</span>
-                </div>
-            </td>
-        </tr>
-    </table>
+    <div class="tabbable" id="gpio-tabs">
+        <ul class="nav nav-tabs" id="tabs">
+            <li class="active"><a href="#gpio-tabs-bindings" data-toggle="tab">Bindings</a></li>
+            <li><a href="#gpio-tabs-rules" data-toggle="tab">Rules</a></li>
+            <li><a href="#gpio-tabs-other" data-toggle="tab">Other</a></li>
+        </ul>
+        <div id="tabs_content" class="tab-content">
+            <div id="gpio-tabs-bindings" class="tab-pane">
+                <h5>GPIO Bindings</h5>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>GPIO</td>
+                            <td>Type</td>
+                            <td>Label</td>
+                            <td>Params</td>
+                            <td>UI control</td>
+                            <td>Pin factory</td>
+                        </tr>
+                    </thead>
+                    <tbody class="settings-gpio-rows" data-bind="foreach: gpioSettings">
+                        <tr>
+                            <td>
+                                <div data-bind="text: gpio"></div>
+                            </td>
+                            <td>
+                                <select class="gpio-type" data-bind="options: $root.gpioTypes(), selectedOptions: type"></select>
+                            </td>
+                            <td>
+                                <div data-bind="ifnot: type() == 'UNDEFINED'">
+                                    <span><input class="gpio-label" data-bind="textInput: $data.label" /></span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class='settings-gpio-params' data-bind="if: type() == 'OUTPUT'">
+                                    <div>Initial value:
+                                        <input type='radio' name='initial-value' value='LOW' data-bind="checked: $data.initialValue">0</input>
+                                        <input type='radio' name='initial-value' value='HIGH' data-bind="checked: $data.initialValue">1</input>
+                                    </div>
+                                    <div>Active state:
+                                        <input type='radio' name='active-state' value='LOW' data-bind="checked: $data.activeState">0</input>
+                                        <input type='radio' name='active-state' value='HIGH' data-bind="checked: $data.activeState">1</input>
+                                    </div>
+                                </div>
+                                <div class='settings-gpio-params' data-bind="if: type() == 'INPUT'">
+                                    <div>Active state:
+                                        <input type='radio' name='active-state' value='LOW' data-bind="checked: $data.activeState">0</input>
+                                        <input type='radio' name='active-state' value='HIGH' data-bind="checked: $data.activeState">1</input>
+                                    </div>
+                                    <div>Bounce time [ms]:<input type="number" class='gpio-bounce'
+                                            data-bind="textInput: $data.bounceTime"
+                                        /></div>
+                                    <div><input type='checkbox' data-bind="checked: $data.pullUp">Pull
+                                        up
+                                        </input>
+                                    </div>
+                                </div>
+                                <div class='settings-gpio-params' data-bind="if: type() == 'PWM'">
+                                    <div>Initial value:
+                                        <input type='radio' name='initial-value' value='LOW' data-bind="checked: $data.initialValue">0</input>
+                                        <input type='radio' name='initial-value' value='HIGH' data-bind="checked: $data.initialValue">1</input>
+                                    </div>
+                                    <div>Frequency [Hz]:<input type="number" class='pwm-frequency'
+                                            data-bind="textInput: $data.frequency"
+                                        /></div>
+                                    <div>Active state:
+                                        <input type='radio' name='active-state' value='LOW' data-bind="checked: $data.activeState">0</input>
+                                        <input type='radio' name='active-state' value='HIGH' data-bind="checked: $data.activeState">1</input>
+                                    </div>
+                                    <div><input type='checkbox' data-bind="checked: $data.frequency">Pull
+                                        up
+                                        </input>
+                                    </div>
+                                </div>
+                                <div class='settings-gpio-params' data-bind="if: type() == 'SERVO'">
+                                    <div>Initial value:<input class='pwm-frequency'
+                                            data-bind="textInput: $data.initialValue"
+                                        /></div>
+                                    <div>Min pulse width:<input type="number" class='pwm-frequency'
+                                            data-bind="textInput: $data.minPulseWidth"
+                                        /></div>
+                                    <div>Max pulse width:<input type="number" class='pwm-frequency'
+                                            data-bind="textInput: $data.maxPulseWidth"
+                                        /></div>
+                                    <div>Frame width:<input class='pwm-frequency' data-bind="textInput: $data.frameWidth"
+                                        /></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div data-bind="if: type() == 'INPUT'">
+                                    <select class="gpio-type" data-bind="options: $root.inputControls(), selectedOptions: $data.controlType"
+                                    />
+                                </div>
+                                <div data-bind="if: type() == 'OUTPUT'">
+                                    <select class="gpio-type" data-bind="options: $root.outputControls(), selectedOptions: $data.controlType"
+                                    />
+                                </div>
+                                <div data-bind="if: type() == 'PWM'">
+                                    <select class="gpio-type" data-bind="options: $root.pwmControls(), selectedOptions: $data.controlType"
+                                    />
+                                </div>
+                                <div data-bind="if: type() == 'SERVO'">
+                                    <select class="gpio-type" data-bind="options: $root.servoControls(), selectedOptions: $data.controlType"
+                                    />
+                                </div>
+                            </td>
+                            <td>
+                                <div data-bind="ifnot: type() == 'UNDEFINED'">
+                                    <select class="gpio-pin-factory" data-bind="options:
+                                    $root.gpioFactories(), selectedOptions: $data.pinFactory "></select>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="gpio-tabs-rules " class="tab-pane ">
+                <h5>GPIO Rules</h5>
+            </div>
+            <div id="gpio-tabs-other " class="tab-pane ">
+                <h5>Other settings</h5>
+            </div>
+        </div>
+    </div>
 </form>

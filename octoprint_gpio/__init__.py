@@ -13,62 +13,55 @@ import octoprint.plugin
 
 from enum import Enum
 
-
-class GPIOType(Enum):
-    UNDEFINED = 0
-    OUTPUT = 1
-    INPUT = 2
-    PWM = 3
-    SERVO = 4
-    WAVEFORM = 5
+# {"gpio": 0, "type": ["UNDEFINED"]},
+# {"gpio": 1, "type": ["UNDEFINED"]},
+# {"gpio": 2, "type": ["INPUT"], "label": "Enclosure lock sensor", "pullUp": True, "activeState": True, "bounceTime": 0},
+# {"gpio": 3, "type": ["OUTPUT"], "label": "Enclosure light", "initialValue": False},
+# {"gpio": 4, "type": ["PWM"], "label": "RGB backlight"},
+# {"gpio": 6, "type": ["SERVO"], "label": ""},
 
 
 class GpioPlugin(
-    octoprint.plugin.SettingsPlugin,
-    octoprint.plugin.AssetPlugin,
-    octoprint.plugin.TemplatePlugin,
+        octoprint.plugin.SettingsPlugin,
+        octoprint.plugin.AssetPlugin,
+        octoprint.plugin.TemplatePlugin,
 ):
 
     ##~~ SettingsPlugin mixin
     def get_settings_defaults(self):
         return dict(
-            bindings=[
-                {"gpio": 0, "type": ["UNDEFINED"]},
-                {"gpio": 1, "type": ["UNDEFINED"]},
-                {"gpio": 2, "type": ["INPUT"], "label": "Enclosure lock sensor", "pullUp": True, "activeState": True, "bounceTime": 0},
-                {"gpio": 3, "type": ["OUTPUT"], "label": "Enclosure light", "initialValue": False},
-                {"gpio": 4, "type": ["PWM"], "label": "RGB backlight"},
-                {"gpio": 5, "type": ["WAVEFORM"], "label": ""},
-                {"gpio": 6, "type": ["SERVO"], "label": ""},
-            ]
-        )
+            bindings=[{
+                "gpio": k,
+                "type": ["UNDEFINED"]
+            } for k in range(0, 27)],
+            gpioTypes=["UNDEFINED", "OUTPUT", "INPUT", "PWM", "SERVO"],
+            gpioFactories=["Native", "PiGPIO", "RPIO", "RPi.GPIO", "Mock"])
 
     ##~~ AssetPlugin mixin
     def get_assets(self):
         # Define your plugin's asset files to automatically include in the
         # core UI here.
-        return dict(
-            js=["js/gpio.js"], css=["css/gpio.css"], less=["less/gpio.less"]
-        )
+        return dict(js=["js/gpio.js"],
+                    css=["css/gpio.css"],
+                    less=["less/gpio.less"])
 
     ##~~ Softwareupdate hook
     def get_update_information(self):
         # Define the configuration for your plugin to use with the Software Update
         # Plugin here. See https://docs.octoprint.org/en/master/bundledplugins/softwareupdate.html
         # for details.
-        return dict(
-            gpio=dict(
-                displayName="Gpio Plugin",
-                displayVersion=self._plugin_version,
-                # version check: github repository
-                type="github_release",
-                user="bkryza",
-                repo="OctoPrint-GPIO",
-                current=self._plugin_version,
-                # update method: pip
-                pip="https://github.com/bkryza/OctoPrint-GPIO/archive/{target_version}.zip",
-            )
-        )
+        return dict(gpio=dict(
+            displayName="Gpio Plugin",
+            displayVersion=self._plugin_version,
+            # version check: github repository
+            type="github_release",
+            user="bkryza",
+            repo="OctoPrint-GPIO",
+            current=self._plugin_version,
+            # update method: pip
+            pip=
+            "https://github.com/bkryza/OctoPrint-GPIO/archive/{target_version}.zip",
+        ))
 
 
 # If you want your plugin to be registered within OctoPrint under a different name than what you defined in setup.py
@@ -90,5 +83,6 @@ def __plugin_load__():
 
     global __plugin_hooks__
     __plugin_hooks__ = {
-        "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
+        "octoprint.plugin.softwareupdate.check_config":
+        __plugin_implementation__.get_update_information
     }
