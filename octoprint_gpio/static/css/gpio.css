@@ -6,7 +6,6 @@ select.gpio-pin-factory {
   width: 6em
 }
 
-
 input.gpio-label {
   width: 10em
 }
@@ -34,3 +33,100 @@ div.settings-gpio-params div {
 .settings-gpio-rows tr:nth-child(odd) {
   background-color: #efefef
 }
+
+.div-table {
+  display: table;
+  width: auto;
+  background-color: #fff;
+  border: 0px;
+  border-spacing: 5px;
+  /* cellspacing:poor IE support for  this */
+}
+
+.div-table-row {
+  display: table-row;
+  width: auto;
+  clear: both;
+  min-height: 3em;
+}
+
+.div-table-col-gpio {
+  float: left;
+  /* fix for  buggy browsers */
+  display: table-column;
+  width: 5em;
+  background-color: #fff;
+  min-height: 3em;
+}
+
+.div-table-col-label {
+  float: left;
+  /* fix for  buggy browsers */
+  display: table-column;
+  width: 20em;
+  background-color: #fff;
+  min-height: 3em;
+}
+
+.div-table-col-control {
+  float: left;
+  /* fix for  buggy browsers */
+  display: table-column;
+  width: 10em;
+  background-color: #fff;
+  min-height: 3em;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 10em;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #08c;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #08c;
+  cursor: pointer;
+}
+
+.toggle-flat {
+  +.toggle-btn {
+    padding: 2px;
+    transition: all .2s ease;
+    background: #fff;
+    border: 4px solid #f2f2f2;
+    border-radius: 2em;
+    &:after {
+      transition: all .2s ease;
+      background: #f2f2f2;
+      content: "";
+      border-radius: 1em;
+    }
+  }
+  &:checked+.tgl-btn {
+    border: 4px solid #7FC6A6;
+    &:after {
+      left: 50%;
+      background: #7FC6A6;
+    }
+  }
+}
+

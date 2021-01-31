@@ -9,7 +9,7 @@
 <!--<pre data-bind="text: ko.toJSON(gpio_settings, null, 2)"></pre>-->
 <form class="form-vertical">
     <div class="tabbable" id="gpio-tabs">
-        <ul class="nav nav-tabs" id="tabs">
+        <ul class="nav nav-pills" id="tabs">
             <li class="active"><a href="#gpio-tabs-bindings" data-toggle="tab">Bindings</a></li>
             <li><a href="#gpio-tabs-rules" data-toggle="tab">Rules</a></li>
             <li><a href="#gpio-tabs-other" data-toggle="tab">Other</a></li>
@@ -37,8 +37,8 @@
                                 <select class="gpio-type" data-bind="options: $root.gpioTypes(), selectedOptions: type"></select>
                             </td>
                             <td>
-                                <div data-bind="ifnot: type() == 'UNDEFINED'">
-                                    <span><input class="gpio-label" data-bind="textInput: $data.label" /></span>
+                                <div class="span4" data-bind="ifnot: type() == 'UNDEFINED'">
+                                    <input class="span12 text-right" data-bind="textInput: $data.label" />
                                 </div>
                             </td>
                             <td>
@@ -57,9 +57,9 @@
                                         <input type='radio' name='active-state' value='LOW' data-bind="checked: $data.activeState">0</input>
                                         <input type='radio' name='active-state' value='HIGH' data-bind="checked: $data.activeState">1</input>
                                     </div>
-                                    <div>Bounce time [ms]:<input type="number" class='gpio-bounce'
+                                    <div class="input-append">Bounce time:<input type="number" class='input-mini text-right'
                                             data-bind="textInput: $data.bounceTime"
-                                        /></div>
+                                        /><span class="add-on">s</span></div>
                                     <div><input type='checkbox' data-bind="checked: $data.pullUp">Pull
                                         up
                                         </input>
@@ -70,9 +70,10 @@
                                         <input type='radio' name='initial-value' value='LOW' data-bind="checked: $data.initialValue">0</input>
                                         <input type='radio' name='initial-value' value='HIGH' data-bind="checked: $data.initialValue">1</input>
                                     </div>
-                                    <div>Frequency [Hz]:<input type="number" class='pwm-frequency'
+                                    <label for="aaa" class="control-label">Frequency</label>
+                                    <div class="input-append"><input id="aaa" type="number" class='input-mini text-right'
                                             data-bind="textInput: $data.frequency"
-                                        /></div>
+                                        /><span class="add-on">Hz</span></div>
                                     <div>Active state:
                                         <input type='radio' name='active-state' value='LOW' data-bind="checked: $data.activeState">0</input>
                                         <input type='radio' name='active-state' value='HIGH' data-bind="checked: $data.activeState">1</input>
@@ -124,10 +125,10 @@
                     </tbody>
                 </table>
             </div>
-            <div id="gpio-tabs-rules " class="tab-pane ">
+            <div id="gpio-tabs-rules" class="tab-pane">
                 <h5>GPIO Rules</h5>
             </div>
-            <div id="gpio-tabs-other " class="tab-pane ">
+            <div id="gpio-tabs-other" class="tab-pane">
                 <h5>Other settings</h5>
             </div>
         </div>

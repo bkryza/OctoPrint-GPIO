@@ -1,11 +1,51 @@
 <h4>{{ _('GPIO') }}</h4>
 
-<form class="form-horizontal">
-    <div data-bind="foreach: $root.gpio_bindings">
-        <tr>
-            <td>
-                <span>GPIO&nbsp;<!--ko text: gpio--><!--/ko--></span>
-            </td>
-        </tr>
+<!--<pre data-bind="text: ko.toJSON($root.enabledControls(), null, 2)"></pre>-->
+
+<div class="div-table" data-bind="foreach: enabledControls">
+    <div class="div-table-row">
+        <div class="div-table-col-gpio">GPIO <span data-bind="text: gpio" /></div>
+        <div class="div-table-col-label" data-bind="text: label"></div>
+        <!-- ko if: type() == 'OUTPUT' -->
+        <div class="div-table-col-control">
+            <div class="btn-group">
+                <button type="button" class="btn btn-success" data-bind="radioButtonGroup: value, radioValue: '1'">ON</button>
+                <button type="button" class="btn btn-danger" data-bind="radioButtonGroup: value, radioValue: '0'">OFF</button>
+            </div>
+        </div>
+        <!-- /ko -->
+        <!-- ko if: type() == 'INPUT' -->
+        <div class="div-table-col-control" data-toggle="buttons">
+            <div class="btn-group">
+                <button type="button" class="btn btn-success" data-bind="radioButtonGroup: value, radioValue: '1'"
+                    disabled>ON</button>
+                <button type="button" class="btn btn-danger" data-bind="radioButtonGroup: value, radioValue: '0'"
+                    disabled>OFF</button>
+            </div>
+        </div>
+        <!-- /ko -->
+        <!-- ko if: type() == 'PWM' -->
+        <div class="div-table-col-control">
+            <div data-bind="if: controlType() == 'Slider'">
+                <input type="range" class="slider" style="width: 10em" min="0" max="100" data-bind="value: value, valueUpdate: 'input'"
+                />
+                <span data-bind="text: value"></span>
+            </div>
+            <div data-bind="if: controlType() == 'Input'">
+                <input type="number" class='pwm-frequency' />
+            </div>
+        </div>
+        <!-- /ko -->
+        <!-- ko if: type() == 'SERVO' -->
+        <div class="div-table-col-control">
+            <div data-bind="if: controlType() == 'Slider'">
+                <input type="range" class="slider" style="width: 10em" min="0" max="100" data-bind="value: value, valueUpdate: 'input'"
+                />
+            </div>
+            <div data-bind="if: controlType() == 'Input'">
+                <input type="number" class='pwm-frequency' />
+            </div>
+        </div>
+        <!-- /ko -->
     </div>
-</form>
+</div>
